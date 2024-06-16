@@ -1,24 +1,24 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Numerics;
+using Data;
 
-namespace Data
+namespace Logic
 {
-    public interface IBall
-    {
-        Vector2 Position { get; }
-        int MoveTime { get; }
-        const int Radius = 50;
-        Vector2 Speed { get; set; }
-    }
+ 
 
     internal class Ball : IBall
     {
         private int _moveTime;
         private Vector2 _speed;
         private Vector2 _position;
+        private Stopwatch _stopwatch;
+        public int ID { get; }
 
-        public Ball(int x, int y)
+        public Ball(int x, int y, float weight, int id)
         {
+            _stopwatch = new Stopwatch();
+            ID = id;
             Random rnd = new Random();
             Speed = new Vector2(x, y)
             {

@@ -1,4 +1,9 @@
-﻿namespace Data
+﻿using Data;
+using System.Numerics;
+using System.Diagnostics;
+using System.Collections.Generic;
+
+namespace Logic
 {
     public abstract class DataApi
     {
@@ -19,22 +24,26 @@
 
         private class Data : DataApi
         {
+            private Logger _logger;
             private List<IBall> Balls { get; }
             public override int Width { get; }
             public override int Height { get; }
             public override event EventHandler BallEvent;
+
             public Data()
             {
                 Balls = new List<IBall>();
-                Width = 400;
-                Height = 400;
+                Width = 380;
+                Height = 380;
+                _logger = new Logger(Balls); // Pass the balls list to the logger
             }
             public override void CreateBalls(int number)
             {
                 Random rnd = new Random();
+                int a = Balls.Count;
                 for (int i = 0; i < number; i++)
                 {
-                    Ball ball = new Ball(rnd.Next(100, 300), rnd.Next(100, 300));
+                    Ball ball = new Ball(rnd.Next(100, 300), rnd.Next(100, 300), 10, i + a);
                     Balls.Add(ball);
                     ball.PositionChanged += Ball_PositionChanged;
                 }
